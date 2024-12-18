@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Workout Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .submit-btn,
+        .clear-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        .clear-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+        .clear-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Custom Workout Input</h1>
+        <form id="workout-form">
+            <div class="form-group">
+                <label for="workout">Workout Name:</label>
+                <input type="text" id="workout" name="workout" placeholder="e.g., Push-ups" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="reps">Reps:</label>
+                <input type="number" id="reps" name="reps" min="1" placeholder="e.g., 10" required>
+            </div>
+            <div class="form-group">
+                <label for="sets">Sets:</label>
+                <input type="number" id="sets" name="sets" min="1" placeholder="e.g., 3" required>
+            </div>
+            <button type="submit" class="submit-btn">Save Workout</button>
+        </form>
+     
+        <button id="clear-storage" class="clear-btn">Clear All Workouts</button>
+    </div>
+
+    <script>
+        document.getElementById('workout-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            
+            const workout = document.getElementById('workout').value;
+            const date = document.getElementById('date').value;
+            const reps = document.getElementById('reps').value;
+            const sets = document.getElementById('sets').value;
+
+           
+            const workoutData = { workout, date, reps, sets };
+
+            
+            const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+
+           
+            workouts.push(workoutData);
+
+          
+            localStorage.setItem('workouts', JSON.stringify(workouts));
+
+            
+            alert('Workout saved!');
+            this.reset();
+        });
+
+      
+        document.getElementById('clear-storage').addEventListener('click', function() {
+            localStorage.removeItem('workouts');
+            alert('All workouts have been cleared!');
+        });
+    </script>
+</body>
+</html>
